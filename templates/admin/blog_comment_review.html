@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "admin/head.html" %}
+    <link rel="stylesheet" href="/static/admin/css/jquery.pagination.css">
+    <script type="text/javascript" src="/static/admin/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/static/admin/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/admin/js/jquery.pagination.min.js"></script>
+</head>
+<body>
+<div class="breadcrub">
+    当前位置：博客管理>博客评论审核
+    <form class="news_filter_form" id="blog_comment_form">
+        <input type="text" placeholder="请输入关键字" class="input_txt" id="input_txt">
+        <input type="submit" value="搜 索" class="input_sub">
+    </form>
+</div>
+<div class="pannel">
+    <table class="common_table" v-cloak="">
+        <tr>
+            <th width="3%">id</th>
+            <th width="70%">评论内容</th>
+            <th width="15%">发布时间</th>
+            <th width="5%">状态</th>
+            <th width="8%">管理操作</th>
+        </tr>
+
+        <tr v-for="comment in comment_list">
+            <td>[[ comment.id ]]</td>
+            <td class="tleft">[[ comment.msg ]]</td>
+            <td>[[ comment.create_time ]]</td>
+
+            <td v-if="comment.status==0" style="color: orange">未审核</td>
+            <td v-else-if="comment.status==1" style="color: green">已通过</td>
+            <td v-else style="color: red">未通过</td>
+
+            <td>
+                <a :href="'/admin/blog_comment_review_detail/'+comment.id" class="review">审核</a>
+            </td>
+        </tr>
+
+
+    </table>
+</div>
+
+<div class="box">
+    <div id="pagination" class="page"></div>
+</div>
+
+<script>
+    var input_txt = '';  // 定义全局变量
+    $(function () {
+
+        //初始化vue对象
+        vue_comment_con = new Vue({
+            el: '.common_table',
+            delimiters: ['[[', ']]'],
+            data: {
+                comment_list: []
+            }
+        });
+        get_blog_list();
+        //搜索
+        $('#blog_comment_form').submit(function (e) {
+            e.preventDefault();
+            input_txt = $('#input_txt').val();
+            get_blog_list();
+        })
+
+    });
+
+    function get_blog_list() {
+        $.get("/admin/blog_comment_review_json", {
+            "input_txt": input_txt,
+            'is_message': $('#is_message').val()
+        }, function (data) {
+            // 将数据传递至表格中
+            vue_comment_con.comment_list = data.comment_list;
+            $("#pagination").pagination({
+                currentPage: 1,
+                totalPage: data.total_page,
+                callback: function (current) {
+                    // 回调继续传递
+                    $.get('/admin/blog_comment_review_json', {
+                        'page': current,
+                        'input_txt': input_txt,
+                        'is_message': $('#is_message').val()
+                    }, function (data) {
+                        vue_comment_con.comment_list = data.comment_list;
+                    });
+                }
+            });
+
+        });
+    }
+
+
+</script>
+
+
+</body>
+</html>

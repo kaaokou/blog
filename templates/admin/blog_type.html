@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "admin/head.html" %}
+	<script type="text/javascript" src="/static/admin/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/static/admin/js/blog_type.js"></script>
+</head>
+<body>
+    <!-- csrf防止跨域请求伪造 -->
+    <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">
+	<div class="breadcrub">
+			当前位置：博客管理>博客分类管理
+		</div>
+		<div class="pannel">
+			<table class="common_table">
+				<tr>
+					<th width="10%">id</th>
+					<th width="70%">类别名称</th>
+					<th width="10%">修改操作</th>
+                    <th width="10%">删除操作</th>
+				</tr>
+                {% for category in category_list %}
+				<tr>
+					<td>{{ category.id }}</td>
+					<td>{{ category.name }}</td>
+					<td><a href="javascript:;" class="edit">编辑</a></td>
+                    <td><a href="javascript:;" class="delete">删除</a></td>
+				</tr>
+                {% endfor %}
+
+				<tr>
+					<td colspan="3"><a href="javascript:;" class="addtype">增加分类</a></td>
+				</tr>
+			</table>
+		</div>
+		
+		<div class="pop_con">
+			<div class="pop">
+				<form>
+					<h3>修改分类</h3>
+					<div class="form_group mt50">
+						<label class="input_label">分类名称：</label><input type="text" class="input_txt3">
+						<span class="error_tip">提示文字</span>
+					</div>			
+					<div class="form_group line_top">
+						<input type="button" value="确定" class="confirm">&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" value="取消" class="cancel">
+					</div>
+				</form>
+			</div>
+			<div class="mask"></div>
+		</div>	
+</body>
+</html>

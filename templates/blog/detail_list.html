@@ -1,0 +1,178 @@
+{% extends 'blog/base.html' %}
+{% block head %}
+    <script type="text/javascript" src="/static/blog/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/static/blog/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/blog/js/detail_list.js"></script>
+{% endblock head %}
+
+{% block body %}
+
+    <!-- 标题头 -->
+    <header class="app-head">
+        <div class="mo-container app-head__body">
+            <a href="/" class="app-logo active">水墨寒的博客</a>
+            <nav class="app-nav">
+                <ul class="app-nav__main" id="app_nav">
+                    <li class=""><a href="/">首页</a>
+                    </li>
+                    <li class="router-link-exact-active active"><a href="/detail_list">文章</a>
+                    </li>
+                    <li class=""><a href="/message">留言</a>
+                    </li>
+                    <li class=""><a href="/laboratory">实验室</a>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle">更多</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-menu__item"><a href="/links">前端导航</a></li>
+                            <li class="dropdown-menu__item"><a href="/about">关于我</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <a class="app-nav__toggle"><i></i> <i></i> <i></i></a></div>
+    </header>
+    <!-- 标题头结束 -->
+
+    <!-- blog列表 -->
+    <div class="app-main">
+        <div class="app-viewport">
+            <div class="mo-container">
+                <div class="posts-list">
+                    <article class="posts-list__main">
+                        <div class="posts-items posts_items_con">
+                            <!-- 一篇文章开始位置 -->
+                            <section class="posts-item" v-for="blog in blog_list">
+                                <!-- 文章头 -->
+                                <div class="posts-item__head">
+                                    <h3 class="posts-item__title">
+                                        <a :href="'/detail/'+blog.id" class="">[[ blog.title ]]</a>
+                                    </h3>
+                                    <div class="posts-item__info mo-text-overflow">
+                                        <span>作者：[[ blog.author ]]</span> <span>栏目：<a
+                                            href="#" class="">[[ blog.category ]]</a></span>
+                                    </div>
+                                    <time class="posts-item__time"><span class="day">[[ blog.day ]]</span> <span
+                                            class="month">[[ blog.month ]]</span> <span
+                                            class="year">[[ blog.year ]]</span>
+                                    </time>
+                                </div>
+                                <!-- 文章头结束 -->
+                                <!-- 文章主题 -->
+                                <div class="posts-item__body mo-clearfix">
+                                    <figure class="posts-item__thumbnail img-flicker">
+                                        <a href="https://smohan.net/blog/tr6bta" class="">
+                                            <!-- 文章图片 -->
+                                            <img :src="blog.pic_url" :alt="blog.title"
+                                                 class="mo-image-loaded">
+                                        </a>
+                                    </figure>
+                                    <!-- 文章内容简介 -->
+                                    <div class="posts-item__content mo-clearfix" v-html="blog.summary">
+
+                                    </div>
+                                    <!-- 文章内容简介结束 -->
+                                </div>
+                                <!-- 文章主题结束  -->
+                                <!-- 文章尾部 -->
+                                <div class="posts-item__foot mo-clearfix">
+                                    <div class="posts-item__tags mo-left mo-text-overflow"><i
+                                            class="mo-icon-bookmarks"></i> <a href="javascript:;"
+                                                                              class="post-tag">后端</a><a
+                                            href="javascript:;" class="post-tag">Python</a><a
+                                            href="javascript:;"
+                                            class="post-tag">Flask</a><a
+                                            href="javascript:;"
+                                            class="post-tag">Django</a>
+                                    </div>
+                                    <div class="posts-item__count mo-right mo-text-overflow"><span
+                                            class="article-count"><i class="mo-icon-visible"></i>[[ blog.click_count ]]</span>
+                                        <span
+                                                class="article-count"><i class="mo-icon-comment"></i>[[ blog.comment_count ]]</span>
+                                    </div>
+                                </div>
+                                <!-- 文章尾部结束 -->
+                            </section>
+                            <!-- 一篇文章结束位置 -->
+
+
+                            <!-- 勿删 -->
+                        </div>
+                    </article>
+
+                    <!-- 右侧链接栏 -->
+                    <aside class="posts-list__aside">
+                        <div class="post-aside__item">
+                            <!-- 搜索栏 -->
+                            <div class="post-search">
+                                <form class="post-search__form" >
+                                    <label class="post-search__label">
+                                        <input type="search"
+                                               placeholder="检索..."
+                                               spellcheck="false"
+                                               class="post-search__input"
+                                               name="search_name"
+                                               id="search_name">
+                                        <input type="text" style="display: none">
+                                        <span class="post-search__btn">
+
+                                            <i class="mo-icon-search" id="search"></i>
+
+                                        </span></label>
+                                </form>
+                                <div class="post-search__result" style="display: none;"><!---->
+                                    <ul>
+                                        <li class="eof mo-text-danger mo-text-center">
+                                            暂无搜索结果...
+                                        </li>
+                                    </ul>
+                                    <!---->
+                                </div>
+                            </div>
+                            <!-- 博客主题栏 -->
+                            <div class="post-category">
+                                <ul class="post_menu">
+                                    <li data-id="0" class="post-category__item"><a href="javascript:;">全部博文</a>
+                                    </li>
+                                    {% for category in category_list %}
+                                        <li data-id="{{ category.id }}"
+                                            class="post-category__item "><a href="javascript:;">{{ category.name }}</a>
+                                        </li>
+
+                                    {% endfor %}
+                                    <li class="post-category__slider" style="top: 0px;"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- <div class="post-aside__item"><h4 class="post-aside__item__title">热门标签</h4> <div class="post-aside__item__body post-aside__tags"><a href="https://smohan.net/blog/t/npm" class="" style="color: rgb(81, 81, 81);">npm</a><a href="https://smohan.net/blog/t/html5" class="" style="color: rgb(92, 184, 92);">html5</a><a href="https://smohan.net/blog/t/react.js" class="" style="color: rgb(121, 93, 163);">react.js</a><a href="https://smohan.net/blog/t/git" class="" style="color: rgb(217, 83, 79);">git</a><a href="https://smohan.net/blog/t/mo" class="" style="color: rgb(81, 81, 81);">mo</a><a href="https://smohan.net/blog/t/css3" class="" style="color: rgb(158, 158, 158);">css3</a><a href="https://smohan.net/blog/t/mongoose" class="" style="color: rgb(92, 184, 92);">mongoose</a><a href="https://smohan.net/blog/t/sass" class="" style="color: rgb(241, 89, 66);">sass</a><a href="https://smohan.net/blog/t/linux" class="" style="color: rgb(121, 93, 163);">linux</a><a href="https://smohan.net/blog/t/mongodb" class="" style="color: rgb(92, 184, 92);">mongodb</a><a href="https://smohan.net/blog/t/angular" class="" style="color: rgb(107, 195, 13);">angular</a><a href="https://smohan.net/blog/t/nodejs" class="" style="color: rgb(212, 68, 101);">nodejs</a><a href="https://smohan.net/blog/t/github" class="" style="color: rgb(158, 158, 158);">github</a><a href="https://smohan.net/blog/t/smusic" class="" style="color: rgb(241, 89, 66);">smusic</a><a href="https://smohan.net/blog/t/vue" class="" style="color: rgb(92, 184, 92);">vue</a><a href="https://smohan.net/blog/t/centos" class="" style="color: rgb(217, 83, 79);">centos</a></div></div>  -->
+
+                        <!-- 热门文章栏 -->
+                        <div class="post-aside__item">
+                            <h4 class="post-aside__item__title">热门文章</h4>
+                            <div class="post-aside__item__body">
+                                <ul class="post-aside__hot">
+                                    <!-- 热门文章列表 -->
+                                    {% for rank_blog in rank_blogs %}
+                                        <li class="mo-text-overflow">
+                                            <a href="/detail/{{ rank_blog.id }}" class=""
+                                               title="{{ rank_blog.title }}">{{ rank_blog.title }}</a>
+                                        </li>
+
+                                    {% endfor %}
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div></div>
+
+                    </aside>
+                    <!-- 右侧链接栏结束 -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock body %}

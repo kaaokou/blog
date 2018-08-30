@@ -1,0 +1,75 @@
+{% extends 'blog/base.html' %}
+
+{% block body %}
+        <!-- 标题头 -->
+    <header class="app-head">
+        <div class="mo-container app-head__body">
+            <a href="/" class="app-logo active">水墨寒的博客</a>
+            <nav class="app-nav">
+                <ul class="app-nav__main" id="app_nav">
+                    <li class=""><a href="/">首页</a>
+                    </li>
+                    <li class="router-link-exact-active"><a href="/detail_list">文章</a>
+                    </li>
+                    <li class=""><a href="/message">留言</a>
+                    </li>
+                    <li class=""><a href="/laboratory">实验室</a>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle">更多</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-menu__item"><a href="/links">前端导航</a></li>
+                            <li class="dropdown-menu__item active"><a href="/about">关于我</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <a class="app-nav__toggle"><i></i> <i></i> <i></i></a></div>
+    </header>
+    <!-- 标题头结束 -->
+  
+   
+  <div class="app-main"><div class="app-viewport">
+    <aside class="mo-banner"><figure class="mo-banner-bg"><div class="mo-banner-bg_body"><div class="svg svg-block image1"></div> <div class="svg svg-diamond image2"></div> <div class="svg svg-leaf image3"></div> <div class="svg svg-small-circle"></div> <div class="svg svg-big-circle"></div> <div class="svg svg-triangle image4"></div></div></figure> 
+    <div class="mo-container">
+      <h1 class="mo-banner__title">关于</h1> 
+      <p class="mo-banner__desc">游弋在代码里的人生~</p></div>
+    </aside> 
+    
+    <!-- 主题内容介绍 -->
+    <div class="mo-container"><div class="posts-detail"><article class="posts-detail__body"><section class="markdown-body post-detail__contents mo-clearfix">
+      <!-- 自我介绍 -->
+      <h3>关于我</h3> 
+      <p>90后狮子座，毕业于安徽一个普通的学校，曾在合肥学习4年，深圳又去了2年，回家1年。没啥工作经历， 后来转行学Python，发现自己喜欢敲代码的感觉，相信编程是一门艺术！
+            <br>在20XX年的某一天又回到了深圳，世事如梦，恍若隔世。</p>
+          以下是能联系到我的各种方法：
+      <ul>
+        <li>邮件：
+            <a href="javascript:;">1512227073@qq.com</a></li>
+        <li>微博：
+              <a href="javascript:;" target="_blank">https://weibo.com/kaaokou</a></li>
+        <li>Github：
+              <a href="javascript:;" target="_blank">https://github.com/kaaokou/</a></li>
+        <li>与文章或者项目相关的问题，请直接在文后评论处留言</li>
+      </ul> 
+      <!-- 微信公众号 -->
+{#      <h3>微信公众号</h3> #}
+{#      <figure><img src="./about_files/qrcode_wx.603b750.jpg" alt=""></figure> #}
+{#      <p>欢迎关注我的微信公众号，文章等将在第一时间同步。</p> #}
+      <!-- 有关介绍 -->
+      <h3>关于博客</h3> 
+      <p>主要就是玩玩而已。。。</p> <p>本站最开始使用Python+Vue+MySQL+Redis构建，目前使用
+        <p>本站服务器使用阿里云ECS；静态文件存储于七牛云存储和阿里云OSS。</p> <h3>关于版权</h3> <p>本站采用「
+            <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh" target="_blank">署名-非商业性使用 4.0 国际 (CC BY-NC 4.0)</a>」创作共享协议。通俗地讲，只要在使用时注明出处，那么您可以可以对本站所有原创内容（转载内容请联系原作者）进行转载、节选、二次创作，但是您不得对其用于商业目的。</p> <p>
+            出于带宽成本考虑，本站的图片做了域名防盗链处理，请您在转载时将图片下载并重新上传，不便之处请见谅。
+          </p> 
+          </section> 
+
+      
+      </article></div></div></div></div> 
+        
+        
+        
+        
+        
+        
+ {%  endblock body %}

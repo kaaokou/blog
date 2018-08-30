@@ -1,0 +1,99 @@
+{% extends 'blog/base.html' %}
+
+{% block body %}
+
+    <!-- 标题头 -->
+    <header class="app-head">
+        <div class="mo-container app-head__body">
+            <a href="/" class="app-logo active">水墨寒的博客</a>
+            <nav class="app-nav">
+                <ul class="app-nav__main" id="app_nav">
+                    <li class="active"><a href="/">首页</a>
+                    </li>
+                    <li class="router-link-exact-active"><a href="/detail_list">文章</a>
+                    </li>
+                    <li class=""><a href="/message">留言</a>
+                    </li>
+                    <li class=""><a href="/laboratory">实验室</a>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle">更多</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-menu__item"><a href="/links">前端导航</a></li>
+                            <li class="dropdown-menu__item"><a href="/about">关于我</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <a class="app-nav__toggle"><i></i> <i></i> <i></i></a></div>
+    </header>
+    <!-- 标题头结束 -->
+
+
+    <div class="app-main">
+        <div class="app-viewport">
+            <div class="page-index">
+                <div class="index-banner background-overlay background-attachment-fixed">
+                    <div class="mo-container"><h1 class="app-name">kaaokou</h1>
+                        <p class="app-slogan">Talk is cheap, show me the code! </p>
+                        <div class="index-btns"><a target="_blank" href="https://github.com/kaaokou"
+                                                   class="index-btns__btn"><i class="mo-icon-github"></i>
+                            GitHub
+                        </a> <a href="/detail_list" class="index-btns__btn">进入博客</a></div>
+                    </div>
+                </div>
+                <div class="index-pages">
+                    <section class="index-pages__page index-pages-structure"><h2 class="index-pages__title">
+                        人生苦短，我学Python</h2>
+                        <p class="index-pages__slogan">博客采用如下技术/工具构建</p>
+                        <div class="atlas">
+                            <div class="atlas-cell atlas-cell__fed mo-clearfix"><h3 class="atlas-title"><span>Vue</span>
+                            </h3>
+                                <ul class="atlas-list mo-text-right">
+                                    <li>Vue 2</li>
+                                    <li>Mo Css Framework
+                                        <a href="https://github.com/kaaokou" target="_blank">(github)</a></li>
+                                    <li>...</li>
+                                </ul>
+                            </div>
+                            <div class="atlas-cell atlas-cell__api mo-clearfix"><h3 class="atlas-title"><span>Flask</span>
+                            </h3>
+                                <ul class="atlas-list mo-text-left">
+                                    <li>Express 4</li>
+                                    <li>MySql &amp;&amp; Redis</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="index-pages__page index-pages-about"><h2 class="index-pages__title">关于我，关于博客</h2>
+                        <p class="index-pages__slogan">一段从2010年开始用起来的自我介绍</p>
+                        <p class="about-me">
+                            卡拗口，90后狮子座普通男青年！毕业于安徽一所普通大学的非计算机专业，
+                            <br> 思维欠发达，差点迷失于错综复杂的电路与多维空间信号中……遂改行，从事于Python人工智能与后端开发。
+                            <br> 喜欢敲代码的感觉，相信编程是一门艺术
+                            <br> 自诩为游弋在代码里的人生
+                        </p>
+
+                    </section>
+                    <section
+                            class="index-pages__page index-pages-contact background-overlay background-attachment-fixed">
+                        <div class="mo-container"><h2 class="index-pages__title" style="color: rgb(255, 255, 255);">
+                            你可以在这些场所找到我</h2>
+                            <ul class="contact-list">
+                                <li><a target="_blank" href="https://github.com/kaaokou"><i class="mo-icon-github"></i></a>
+                                </li>
+                                <li><a target="_blank" href="http://weibo.com/kaaokou"><i class="mo-icon-weibo"></i></a>
+                                </li>
+                                <li><a target="_blank" href="#"><i
+                                        class="mo-icon-xitu"></i></a></li>
+                            </ul>
+                        </div>
+                    </section>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock body %}

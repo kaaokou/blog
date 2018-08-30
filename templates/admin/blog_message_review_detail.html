@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "admin/head.html" %}
+    <script type="text/javascript" src="/static/admin/js/jquery-1.12.4.min.js"></script>
+    <script src="/static/admin/js/blog_comment_review_detail.js"></script>
+</head>
+<body>
+<div class="breadcrub">
+    当前位置：博客管理>博客留言审核
+</div>
+<div class="pannel">
+    <form class="blog_review" method="post">
+        <h3 class="review_title">留言审核</h3>
+        <div class="form_group">
+            <label>博客留言内容：</label>
+            <input type="text" class="input_txt2" value="{{ comment.msg }}" readonly>
+        </div>
+
+        <div class="form_group indent_group">
+            <input type="radio" name="action" checked="" value="accept"> 通过&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="action" value="reject"> 拒绝通过
+        </div>
+        <div class="form_group group_hide">
+            <label>拒绝原因：</label>
+            <textarea class="input_multxt" name="reason"></textarea>
+        </div>
+        <div class="form_group indent_group line_top">
+
+            <input type="submit" value="确定" class="confirm">
+            <input type="button" value="取消" class="cancel" onclick="cancel()">
+        </div>
+        <!-- 隐藏字段，用于记录当前博客id -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    </form>
+</div>
+
+<script>
+    $(function () {
+        var $radio = $('input[name="action"]');
+        $radio.click(function () {
+            if ($(this).index() == 1) {
+                $('.group_hide').show();
+            }
+            else {
+                $('.group_hide').hide();
+            }
+        });
+
+        tinymce.init({
+            //选择class为content的标签作为编辑器
+            selector: '#rich_content',
+            //方向从左到右
+            directionality: 'ltr',
+            //语言选择中文
+            language: 'zh_CN',
+            //高度为400
+            height: 400,
+            width: '100%',
+            //按tab不换行
+            nonbreaking_force_tab: true,
+            readonly: 1
+        });
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "admin/head.html" %}
+    <script type="text/javascript" src="/static/admin/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/static/admin/js/jquery.form.min.js"></script>
+    <script src="/static/admin/js/blog_edit_detail.js"></script>
+</head>
+<body>
+<div class="breadcrub">
+    当前位置：博客管理>博客内容编辑
+</div>
+<div class="pannel">
+    <form class="blog_edit" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="blog_id" value="{{ blog.id }}">
+        <h3 class="review_title">博客内容编辑</h3>
+        <div class="form_group">
+            <label>博客标题：</label>
+            <input type="text" class="input_txt2" value="{{ blog.title }}" name="title">
+        </div>
+        <div class="form_group">
+            <label>博客分类：</label>
+            <select class="sel_opt" name="category_id">
+                {% for category in category_list %}
+                    {% if category.id==blog.category_id %}
+                        <option value="{{ category.id }}" selected="selected">{{ category.name }}</option>
+                    {% else %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endif %}
+                {% endfor %}
+
+            </select>
+        </div>
+        <div class="form_group">
+            <label>博客摘要：</label>
+            <textarea class="input_multxt" name="summary" value="">{{ blog.summary }}</textarea>
+        </div>
+        <div class="form_group">
+            <label>索引图片：</label>
+            <img src="{{ blog.pic_url }}" alt="索引图片" class="index_pic" id="image">
+        </div>
+        <div class="form_group">
+            <label>上传图片：</label>
+            <input type="file" class="input_file" name="pic" id="pic">
+        </div>
+        <div class="form_group">
+            <label>博客内容：</label>
+            <div class="">
+{#                <input class="input_area" id="rich_content" name="context" value="{{ blog.context}}"></input>#}
+                  <textarea class="input_multxt" name="context" value="" style="height: 400px">{{ blog.context }}</textarea>
+            </div>
+        </div>
+        <div class="form_group indent_group line_top">
+            <input type="submit" value="确定" class="confirm">
+            <input type="button" value="取消" class="cancel" onclick="cancel()">
+        </div>
+        <!-- 隐藏字段，用于记录当前博客id -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" id="csrf_token">
+    </form>
+</div>
+
+</body>
+</html>

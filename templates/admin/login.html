@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "admin/head.html" %}
+    <script type="text/javascript" src="/static/admin/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/static/admin/js/jsencrypt.min.js"></script>
+</head>
+<body>
+<div class="login_logo">
+    <img src="/static/admin/images/logo.png" alt="">
+</div>
+<form method="post" class="login_form">
+    <!-- csrf防止跨域请求伪造 -->
+    <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">
+    <!-- 公钥 -->
+    <input type="hidden" id="public_key" value="{{ public_key }}">
+    <h1 class="login_title">用户登录</h1>
+    <input type="text" name="username" placeholder="用户名" class="input_txt" id="mobile" >
+    <input type="password" name="password" placeholder="密码" class="input_txt" id="password">
+        <div class="error_tip"></div>
+
+    <input type="submit" value="登 录" class="input_sub">
+</form>
+<div class="login_bg"></div>
+<script>
+    // 加密传递值
+    // TODO 登录表单提交
+    $(".login_form").submit(function (e) {
+        e.preventDefault();
+        var mobile = $("#mobile").val();
+        var password = $("#password").val();
+        // 清空密码
+        $("#password").val("");
+
+        if (!mobile) {
+            // $("#login-mobile-err").show();
+            alert("手机号不能为空！");
+            return;
+        }
+
+        if (!password) {
+            alert("密码不能为空！");
+            // $("#login-password-err").show();
+            return;
+        }
+        var encrypt = new JSEncrypt();  // 创建加密对象
+        encrypt.setPublicKey($("#public_key").val());
+        // TODO 发起登录请求
+        $.post("/admin/login", {
+            "csrf_token": $("#csrf_token").val(),
+            "mobile": encrypt.encrypt(mobile),
+            "password": encrypt.encrypt(password)
+        }, function (data) {
+            if(data.result==0) {
+                alert("用户或者密码不能为空！");
+            }
+            else if(data.result==-1){
+                $(".error_tip").html("账号或者密码错误");
+                $(".error_tip").show();
+            }
+            else if(data.result==1){
+                // 跳转
+                location.href = "/admin/";
+            }
+        });
+
+    });
+
+</script>
+</body>
+</html>

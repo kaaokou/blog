@@ -1,0 +1,269 @@
+{% extends 'blog/base.html' %}
+{% block head %}
+    <script type="text/javascript" src="/static/blog/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/static/blog/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/blog/js/detail.js"></script>
+{% endblock head %}
+{% block body %}
+
+    <!-- 标题头 -->
+    <header class="app-head">
+        <div class="mo-container app-head__body">
+            <a href="/" class="app-logo active">水墨寒的博客</a>
+            <nav class="app-nav">
+                <ul class="app-nav__main" id="app_nav">
+                    <li class=""><a href="/">首页</a>
+                    </li>
+                    <li class="router-link-exact-active active"><a href="/detail_list">文章</a>
+                    </li>
+                    <li class=""><a href="/message">留言</a>
+                    </li>
+                    <li class=""><a href="/laboratory">实验室</a>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle">更多</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-menu__item"><a href="/links">前端导航</a></li>
+                            <li class="dropdown-menu__item"><a href="/about">关于我</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <a class="app-nav__toggle"><i></i> <i></i> <i></i></a></div>
+    </header>
+    <!-- 标题头结束 -->
+    <input type="hidden" id="blog_id" value="{{ blog.id }}">
+
+    <div class="app-main">
+        <div class="app-viewport">
+            <div class="posts-detail">
+                <!-- 主体头开始 -->
+                <aside class="app-banner post-banner background-loaded">
+                    <figure class="app-banner__bg"
+                            style="background-image: url(&quot;{{ blog.pic_url }}&quot;);"></figure>
+                    <div class="mo-container">
+                        <div class="app-banner__body"><h1 class="posts-banner__title">{{ blog.title }}</h1>
+                            <div class="posts-banner__info">
+                                {% if blog.category_id != 3 %}
+                                    <span class="mo-bg-success">原创</span>
+                                {% else %}
+                                    <span class="mo-bg-danger">转载</span>
+                                {% endif %}
+                                <span class="mo-bg-primary">{{ blog.category.name }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <!-- 主体头部结束 -->
+                <div class="mo-container">
+                    <article class="posts-detail__body">
+                        <section class="markdown-body post-detail__contents mo-clearfix"><!---->
+
+
+
+                            <!-- blog内容开始 -->
+                            <div class="mo-clearfix">
+                                <!-- 内容简介开始 -->
+                                {{ blog.summary | md |safe }}
+                                <!-- 内容简介结束 -->
+
+                                <!-- blog内容正式开始 -->
+
+                                {{ blog.context | md| safe }}
+{#                                {{ text | md }}#}
+
+                            </div>
+
+
+
+
+                            <!-- blog内容结束 -->
+
+
+                            <br> <!---->
+                            <!-- blog发布事件、阅读数展示开始 -->
+                            <p class="mo-text-hint">-- EOF --</p>
+
+                            <div class="posts-detail__info">
+                                发表于
+                                <time class="mo-text-hint">{{ blog.create_time }}</time>
+                                ， 最后更新于
+                                <time class="mo-text-hint">{{ blog.update_time }}</time>
+                                。
+
+                                已被累计阅读「
+                                <strong class="mo-text-danger">{{ blog.click_count }}</strong>」次。
+                                <br> 本文发布于栏目「
+                                <a href="javascript:;" class="">{{ blog.category.name }}</a> 」
+{#， 并被添加「#}
+{#                                <a href="https://smohan.net/blog/t/css3" class="post-tag">Python</a><a#}
+{#                                    href="https://smohan.net/blog/t/sass" class="post-tag">后端</a><a#}
+{#                                    href="https://smohan.net/blog/t/%E4%BC%AA%E7%B1%BB" class="post-tag">视图</a><a#}
+{#                                    href="https://smohan.net/blog/t/%E4%BC%AA%E9%80%89%E6%8B%A9%E5%99%A8"#}
+{#                                    class="post-tag">路由</a>」等标签。#}
+{#                                <a target="_blank" href="javascript:;">查看本文 Markdown 版本 »</a>#}
+                            </div>
+                            <br>
+                            <!-- 分享链接 -->
+                            <ul class="app-share">
+                                <li data-tipsy="15" class="share-item share-item-praise mo-tipsy--top"><a
+                                        class="share-item_body"><span class="praises-count mo-text-overflow"
+                                                                      style="display: none;">15</span>
+                                    <div class="praises-loading" style="display: none;"><span class="mo-loading"><i
+                                            style="width: 8px; height: 8px;"></i><i
+                                            style="width: 8px; height: 8px;"></i><i
+                                            style="width: 8px; height: 8px;"></i></span></div>
+                                </a></li>
+                                <li class="share-item share-item-qrcode"><a class="share-item_body"></a>
+                                    <figure class="qrcode" style="display: none;"><span class="mo-loading"><i
+                                            style="width: 18px; height: 18px;"></i><i
+                                            style="width: 18px; height: 18px;"></i><i
+                                            style="width: 18px; height: 18px;"></i></span></figure>
+                                </li>
+                                <li class="share-item share-item-weibo"><a class="share-item_body"></a></li>
+                                <li class="share-item share-item-qzone"><a class="share-item_body"></a></li>
+                                <li class="share-item share-item-note"><a class="share-item_body"></a></li>
+                            </ul>
+                            <!----></section>
+                        <!-- 分享链接结束 -->
+
+                        <!-- 评论输入框开始 -->
+                        <section class="post-detail__comments">
+                            <h3 class="comments-list__title">评论<sup>「 {{ blog.comment_count }} 」</sup></h3>
+
+                            <div class="comments-form"><span> </span>
+                                <div title="编辑昵称" class="comments-form__user">
+                                    <figure class="comments-form__avatar"><img src="/static/blog/img/default.gif"
+                                                                               alt="Me">
+                                    </figure>
+                                    <div class="comments-form__nick"><a class="mo-text-overflow">雁过留名</a></div>
+                                </div> <!---->
+                                <!-- 点击触发编辑 -->
+                                <div class="comments-form__body">
+
+                                    <!-- 留言表单提交  comment_content -->
+                                    <form action="#" method="get" class="comment_form">
+                                        <input type="hidden" value="{{ csrf_token() }}" id="csrf_token">
+                                        <div class="comments-form__edit">
+                                            <textarea placeholder="留点空白给你说..."
+                                                                                   spellcheck="false"
+                                                                                   name="comment_content"
+                                                                                   id="msg"></textarea>
+                                            <div class="comments-form__success" style="display: none;"><i
+                                                    class="mo-icon-success"></i>发布成功，将在审核后展示
+                                            </div>
+                                        </div>
+                                        <!-- 显示发布栏 -->
+                                        <div class="comments-form__bar mo-clearfix commens-form__bar--show">
+                                            <div class="mo-left">
+                                                <div class="mo-emoji"><span> </span>
+                                                    <!-- 点击触发表情 -->
+                                                </div>
+                                            </div>
+
+                                            <div class="comments-form__submit mo-right">
+                                                <!-- 发布按钮 -->
+                                                <span class="comments-form__submittip">Ctrl or ⌘ + Enter</span>
+                                                <button type="button" class="comments-form__btn" id="comment_submit">发布</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!-- 留言表单提交结束 -->
+                                </div>
+                            </div>
+
+                            <!-- 评论结束 -->
+
+                            <!-- 已评论内容展示 -->
+                            <div class="comments-list">
+
+                                <!-- 循环显示评论使用VUE加载 -->
+                                <div class="comments-items" id="comments_items">
+
+
+                                    <div class="comments-item" v-for="(comment,index) in comment_list">
+                                        <figure class="comments-item__avatar">
+                                            <img :src="comment.avatar" :alt="comment.nick_name">
+                                        </figure>
+                                        <div class="comment-item__body">
+                                            <div class="comment-item__info mo-clearfix">
+                                                <strong class="comment-item__nick">[[ comment.nick_name ]]</strong>
+                                                <time class="comment-item__time">[[ comment.create_time ]]</time>
+                                                <!-- 评论留言 -->
+                                                <span class="comment-item__reply-btn reply-btn">回复</span>
+                                                <span class="comment-item__floor mo-text-hint mo-right">#[[index+1 ]]</span></div>
+                                            <div class="comment-item__content">[[ comment.msg ]]</div>
+                                            <!-- 回复评论 -->
+                                            <div class="comment-item__quote" v-for="reply in comment.reply_list">
+                                                <div class="comment-item__info">
+                                                    <strong class="comment-item__nick">[[ reply.nick_name ]]</strong>
+                                                    <time class="comment-item__time">[[ reply.create_time ]]</time>
+                                                </div>
+                                                <!-- 回复评论的内容 -->
+                                                <div class="comment-item__content">[[ reply.msg ]]</div>
+                                            </div>
+
+                                            <!-- 回复评论输入框 -->
+                                            <div class="comments-item__reply-form" style="display: none">
+                                                <div class="comments-form"><span> </span>
+
+                                                    <div title="编辑昵称" class="comments-form__user">
+                                                        <figure class="comments-form__avatar"><img
+                                                                src="/static/blog/img/default.gif" alt="Me">
+                                                        </figure>
+                                                        <div class="comments-form__nick"><a class="mo-text-overflow">雁过留名</a>
+                                                        </div>
+                                                    </div> <!---->
+                                                    <div class="comments-form__body">
+
+                                                        <div class="comments-form__edit comments-edit__active">
+                                                            <textarea
+                                                                placeholder="留点空白给你说..." spellcheck="false" class="msg">
+
+                                                            </textarea>
+                                                            <div class="comments-form__success" style="display: none;" id="reply-form__success">
+                                                                <i class="mo-icon-success"></i>
+                                                                发布成功，将在审核后展示
+                                                            </div>
+                                                        </div>
+                                                        <div class="comments-form__bar mo-clearfix commens-form__bar--show">
+                                                            <div class="mo-left">
+                                                                <div class="mo-emoji"><span> </span> <a title="表情"
+                                                                                                        class="mo-emoji__toggle">
+                                                                </a></div>
+                                                            </div>
+                                                            <div class="comments-form__submit mo-right"><span
+                                                                    class="comments-form__submittip">Ctrl or ⌘ + Enter</span>
+                                                                <button class="comments-form__btn"  :comment_id="comment.id">发布</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-- 回复评论输入框结束 -->
+
+
+                                            <!----></div>
+                                    </div>
+
+
+                                    <!-- 加载提示 -->
+                                    <div class="mo-page-more" style="display: none;">
+                                        <button type="button" class="mo-page-more__btn loading"><span>加载中，请稍后...</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </section>
+                    </article>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock body %}

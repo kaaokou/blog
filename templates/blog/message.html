@@ -1,0 +1,200 @@
+{% extends 'blog/base.html' %}
+
+{% block head %}
+    <script type="text/javascript" src="/static/blog/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/static/blog/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/blog/js/message.js"></script>
+{% endblock head %}
+
+{% block body %}
+
+
+    <!-- 标题头 -->
+    <header class="app-head">
+        <div class="mo-container app-head__body">
+            <a href="/" class="app-logo active">水墨寒的博客</a>
+            <nav class="app-nav">
+                <ul class="app-nav__main" id="app_nav">
+                    <li class=""><a href="/">首页</a>
+                    </li>
+                    <li class="router-link-exact-active"><a href="/detail_list">文章</a>
+                    </li>
+                    <li class="active"><a href="/message">留言</a>
+                    </li>
+                    <li class=""><a href="/laboratory">实验室</a>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle">更多</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-menu__item"><a href="/links">前端导航</a></li>
+                            <li class="dropdown-menu__item"><a href="/about">关于我</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <a class="app-nav__toggle"><i></i> <i></i> <i></i></a></div>
+    </header>
+    <!-- 标题头结束 -->
+
+
+    <div class="app-main">
+        <div class="app-viewport">
+            <aside class="app-banner message-banner background-loaded">
+                <figure class="app-banner__bg background-attachment-fixed"
+                        style="background-image: url(&quot;./static/img/index_3.jpg&quot;);"></figure>
+
+                <div class="mo-container">
+                    <div class="app-banner__body">
+                        <h1>Say Hello ~</h1>
+                        <div class="message-form">
+                            <div class="message-form__body">
+                                <div class="comments-form"><span> </span>
+                                    <!-- 点击编辑昵称 -->
+                                    <div title="编辑昵称" class="comments-form__user" style="z-index: 19900235;">
+                                        <figure class="comments-form__avatar"><img src="/static/blog/img/default.gif"
+                                                                                   alt="Me"></figure>
+                                        <div class="comments-form__nick"><a class="mo-text-overflow">雁过留名</a></div>
+                                    </div> <!---->
+
+                                    <div class="comments-form__body">
+                                        <!-- 点击触发编辑 -->
+                                        <!-- 留言表单提交  comment_content -->
+                                        <form method="post" class="comment_form">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" id="csrf_token">
+                                            <div class="comments-form__edit"><textarea placeholder="留点空白给你说..."
+                                                                                       spellcheck="false"
+                                                                                       name="msg" id="msg"></textarea>
+                                                <div class="comments-form__success" style="display: none;"><i
+                                                        class="mo-icon-success"></i>发布成功，将在审核后展示
+                                                </div>
+                                            </div>
+                                            <!-- 显示发布栏 -->
+                                            <div class="comments-form__bar mo-clearfix commens-form__bar--show">
+                                                <div class="mo-left">
+                                                    <div class="mo-emoji"><span> </span>
+                                                        <!-- 点击触发表情 -->
+                                                    </div>
+                                                </div>
+
+                                                <div class="comments-form__submit mo-right">
+                                                    <!-- 发布按钮 -->
+                                                    <span class="comments-form__submittip">Ctrl or ⌘ + Enter</span>
+                                                    <button type="submit" class="comments-form__btn">发布</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- 留言表单提交结束 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+
+            <div class="mo-container">
+
+                <article class="message-items message-items--loaded" id="message_list_con">
+
+
+                    <!-- 左侧留言 -->
+                    <section class="message-list message-list__left">
+                        <!-- 游客留言 -->
+
+                        <div class="message-item" v-for="(message, index) in message_list_left">
+                            <div class="message-item__info">
+                                <figure class="message-item__avatar"><img :src="message.avatar"
+                                                                          :alt="message.nick_name">
+                                </figure>
+                                <div class="message-item__info__body mo-clearfix"><strong
+                                        class="message-item__nick mo-left mo-text-overflow">[[ message.nick_name
+                                    ]]</strong> <span
+                                        class="message-item__time mo-right mo-text-overflow"><span
+                                        class="message-item__floor">[[ index+1 ]]楼 | </span> <time>[[ message.create_time ]]</time></span>
+                                </div>
+                            </div>
+                            <div class="message-item__content">
+                                [[ message.msg ]]
+                            </div>
+                            <div class="message-item__location"><i class="mo-icon-location"></i> <span>中国 · 中国</span>
+                            </div>
+                            <!-- 回复留言 -->
+{#                            <div class="message-item__reply"><strong>回复：</strong>#}
+{#                                <div class="mo-inline">#}
+{#                                    1.session或者cookie的判断，有且验证通过直接跳首页，游客的话，我不知道你的用户系统，如果只有你自己，你可以加个get参数带到wp-login.php后面，如wp-login.php?from=me，只有有这个参数才显示登录，没有的话直接跳。<br>2.#}
+{#                                    <a href="https://common-buy.aliyun.com/?commodityCode=cas#/buy" target="_blank"#}
+{#                                       title="https://common-buy.aliyun.com/?commodityCode=cas#/buy">https://common-buy.aliyun.com/?commodityCode=cas#/buy</a>#}
+{#                                    选【免费型DV SSL】#}
+{#                                </div>#}
+{#                                 / #}
+{#                                <time>05-02</time>#}
+{#                            </div>#}
+
+                        </div>
+
+                    </section>
+                    <!-- 右侧留言 -->
+                    <section class="message-list message-list__right">
+                        <!-- 游客留言 -->
+
+                        <div class="message-item" v-for="(message, index) in message_list_right">
+                            <div class="message-item__info">
+                                <figure class="message-item__avatar"><img :src="message.avatar"
+                                                                          :alt="message.nick_name">
+                                </figure>
+                                <div class="message-item__info__body mo-clearfix"><strong
+                                        class="message-item__nick mo-left mo-text-overflow">[[ message.nick_name
+                                    ]]</strong> <span
+                                        class="message-item__time mo-right mo-text-overflow"><span
+                                        class="message-item__floor">[[ index+1 ]]楼 | </span> <time>[[ message.create_time ]]</time></span>
+                                </div>
+                            </div>
+                            <div class="message-item__content">
+                                [[ message.msg ]]
+                            </div>
+                            <div class="message-item__location"><i class="mo-icon-location"></i> <span>中国 · 中国</span>
+                            </div>
+                            <!-- 回复留言 -->
+
+
+                        </div>
+
+                    </section>
+
+                    <span class="message-items__line"></span>
+                </article>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- 弹出的输入消息框 -->
+    <!-- <div class="mo-popover" style="z-index: 19900209; display: none;"></div> -->
+    <!-- <div class="mo-popover" style="position: absolute; top: 255.5px; left: 306px; z-index: 19900249;" popover-placement="right"> -->
+    <div class="mo-popover" style="z-index: 19900209; display: none;">
+        <div class="comments-user-form">
+            <div class="form-item">
+                <input type="text" placeholder="起个牛逼点的昵称吧~" maxlength="50" spellcheck="false"
+                       class="mo-input comments-input">
+            </div>
+            <div class="form-item">
+                <input type="email" placeholder="电子邮箱" maxlength="100" spellcheck="false"
+                       class="mo-input comments-input">
+            </div>
+            <div class="form-item">
+                <input type="url" placeholder="博客/Github网址" maxlength="100" spellcheck="false"
+                       class="mo-input comments-input">
+            </div>
+            <div class="form-item mo-text-right mo-clearfix">
+                <button type="button" class="mo-btn mo-btn--cancel">取消</button>
+                <button type="button" disabled="disabled" class="mo-btn mo-btn--ensure">确定</button>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock body %}
