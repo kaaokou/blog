@@ -14,7 +14,7 @@ public_key_file = "/rsa_keys/pub_rsa_key.pem"
 private_key_file = "/rsa_keys/my_private_rsa_key.bin"
 
 
-def create_rsa_key(code="kaaokou", base_path=""):
+def create_rsa_key(code="XXXX", base_path=""):
     """创建RSA密钥"""
     # 1.生成一个密码，可以使1024或者2048位
     key = RSA.generate(1024)
@@ -29,7 +29,7 @@ def create_rsa_key(code="kaaokou", base_path=""):
         f.write(key.publickey().exportKey())
 
 
-def decrypt_data(inputdata, code="kaaokou", base_path=""):
+def decrypt_data(inputdata, code="XXXX", base_path=""):
     """解密函数，code为设置的加密密钥"""
     # 1.URL解码和base64解码
     data = base64.b64decode(parse.unquote(inputdata))
